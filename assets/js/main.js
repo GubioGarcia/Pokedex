@@ -24,13 +24,11 @@ function convertPokemonToHtlm(pokemon) {
 
 const pokemonList = document.getElementById('pokemonList')
 
-fetch(url)
-    .then((response) => response.json())
-    .then((jsonBody) => jsonBody.results)
-    .then((pokemons) => {
-        for (let i = 0; i < pokemons.length; i++) {
-            const pokemon = pokemons[i];
-            pokemonList.innerHTML += convertPokemonToHtlm(pokemon)
-        }
+pokeApi.getPokemons().then((pokemons = []) => {
+    const newList = pokemons.map((pokemon) => {
+        return convertPokemonToHtlm(pokemon)
     })
-    .catch((error) => console.error(error))
+
+    const newHtml = newList.join('')
+    pokemonList.innerHTML += newHtml
+})
